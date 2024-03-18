@@ -31,13 +31,6 @@ export default function Footer() {
           <a href="" className="me-4 text-reset">
             <FaGoogle />
           </a>
-          <a
-            href="https://www.instagram.com/krisztdaniel/"
-            target="_blank"
-            className="me-4 text-reset"
-          >
-            <RiInstagramFill />
-          </a>
         </div>
       </section>
       <section>
