@@ -1,0 +1,57 @@
+.overlay_img {
+  background-image: url(C:\Users\Asus\Documents\Szakdolgozat_Kriszt_Daniel\car-rent\src\assets\bmw2.jpg);
+  background-repeat: no-repeat;
+  background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
+
+.navbar_container{
+    position: fixed;
+    top:0;
+    left: 50%;
+    transform: translate(-50%);
+    padding: 2.4rem;
+    width: 100%;
+    background-color: black;
+}
+
+.nav_bar {
+    position: fixed;
+    top:25%;
+    left: 50%;
+    transform: translate(-50%);
+    justify-content: center;
+    width: max-content;
+}
+
+@media screen and (max-width: 236px) {
+    .navbar_container{
+        padding-top: 3rem;
+        padding-bottom: 5rem;
+    }
+    .nav_bar{
+        top:20%;
+    }
+    .nav_bar{
+        display: inline-flex; 
+        justify-content: center;
+        width: 200px ;
+    }
+  }  
+
+
+  @media screen and (max-width: 145px) {
+    .navbar_container{
+        padding-top: 3rem;
+        padding-bottom: 8rem;
+    }
+    .nav_bar{
+        top:20%;
+    }
+    .nav_bar{
+        display: inline-flex; 
+        justify-content: center;
+        width: unset;
+    }
+  }  
