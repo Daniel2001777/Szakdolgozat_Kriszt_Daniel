@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
+import Nav from "./Nav";
 
 const Header = () => {
   const [scroll, setScroll] = useState(320);
@@ -18,7 +18,11 @@ const Header = () => {
         <div className="container my-5 py-5">
           <div className="row align-items-center g-5">
             <div className="col-lg-6 text-center text-lg-start">
-              <h1 className="display-3 fw-bold text-white">
+              <h1 className="display-3 text-light" style={{
+                fontFamily: '"Black Ops One", system-ui',
+                fontWeight: "400 !important",
+                fontStyle: "normal !important",
+              }}>
                 Kriszt Dániel
                 <br />
                 Autóbérlés
@@ -28,7 +32,9 @@ const Header = () => {
         </div>
         <div
           className={
-            scroll ? "" : `rounded-bottom-4 ${styles.navbar_container}`
+            scroll
+              ? `${styles.bold}`
+              : `rounded-bottom-4 ${styles.navbar_container} ${styles.bold}`
           }
         >
           <ul
@@ -38,34 +44,9 @@ const Header = () => {
                 : `nav nav-pills ${styles.nav_bar}`
             }
           >
-            <li className="nav-item">
-              <NavLink
-                to="/home"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                Főoldal
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/cars"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                Autók
-              </NavLink>
-            </li>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-            >
-              Kapcsolat
-            </NavLink>
+            <Nav href="/home" title="Főoldal" />
+            <Nav href="/cars" title="Autók" />
+            <Nav href="/contact" title="Kapcsolat" />
           </ul>
         </div>
       </div>

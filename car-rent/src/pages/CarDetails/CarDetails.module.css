@@ -1,0 +1,55 @@
+.imageContainer {
+  width: 45%;
+  background-color: black;
+  flex: 1 0 50%;
+  border-radius: 1rem 0rem 0rem 1rem;
+  overflow: hidden;
+}
+
+.inputContainer {
+  width: 45%;
+  padding: 0rem;
+  border-radius: 0rem 1rem 1rem 0rem;
+  background-color: black;
+  flex: 1 0 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 2px solid white;
+  min-width: fit-content;
+  padding-top: 1rem;
+}
+
+.inputContainer > .h5 {
+  display: flex;
+  align-items: start !important;
+  width: 29rem;
+  margin-bottom: 0.3rem;
+  font-family: "Black Ops One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.flexBox {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  padding: 3rem;
+}
+
+.label {
+  margin-top: 0;
+  width: 30rem;
+  z-index: 1;
+}
+
+.description {
+    padding: 1rem;
+  border-top: 2px solid white;
+  width: 100%;
+  contain: content;
+  color: white;
+  word-break: break-all;
+    white-space: normal;
+
+}

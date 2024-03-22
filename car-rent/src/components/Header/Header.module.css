@@ -1,5 +1,5 @@
 .overlay_img {
-  background-image: url(C:\Users\Asus\Documents\Szakdolgozat_Kriszt_Daniel\car-rent\src\assets\bmw2.jpg);
+  background-image: url(C:\Users\Asus\Documents\Szakdolgozat_Kriszt_Daniel\car-rent\src\assets\images\grey-car.jpg);
   background-repeat: no-repeat;
   background-size:     cover;                      /* <------ */
     background-repeat:   no-repeat;
@@ -14,6 +14,7 @@
     padding: 2.4rem;
     width: 100%;
     background-color: black;
+    z-index: 2;
 }
 
 .nav_bar {
@@ -23,6 +24,11 @@
     transform: translate(-50%);
     justify-content: center;
     width: max-content;
+    z-index: 2;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 @media screen and (max-width: 236px) {

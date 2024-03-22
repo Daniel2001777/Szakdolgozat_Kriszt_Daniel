@@ -1,0 +1,21 @@
+/*.container {
+  position: relative;
+  z-index: -1;
+  background-color: white;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 2rem;
+  width: 100% !important;
+}*/
+
+.container{
+    width: fit-content !important;
+    background-color: black;
+    color: white;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
+}
