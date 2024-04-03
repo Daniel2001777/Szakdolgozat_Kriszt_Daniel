@@ -18,7 +18,7 @@ export default function CarDetails() {
           <p className={style.description}></p>
         </div>
         <div className={style.inputContainer}>
-          <CarForm />
+          <CarForm carName={carData.slug} />
         </div>
       </div>
     </>

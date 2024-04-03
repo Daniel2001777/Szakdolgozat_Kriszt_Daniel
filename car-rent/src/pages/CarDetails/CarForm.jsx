@@ -1,15 +1,43 @@
-import { React, useCallback, useRef, useState } from "react";
-import { MdEmail } from "react-icons/md";
-import { IoIosContact } from "react-icons/io";
-import { FloatingLabel, Form } from "react-bootstrap";
-import { format } from "date-fns";
-import style from "./CarDetails.module.css";
+import { format, set } from "date-fns";
+import { React, useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import axios from "../../axios/axiosInstance";
+import CalculateForm from "./RentForms/CalculateForm/CalculateForm";
+import RentEmail from "./RentForms/DataForms/RentEmail";
+import RentEndDate from "./RentForms/DataForms/RentEndDate";
+import style from "./RentForms/RentForm.module.css";
+import RentName from "./RentForms/DataForms/RentName";
+import RentStartDate from "./RentForms/DataForms/RentStartDate";
+import RentTel from "./RentForms/DataForms/RentTel";
+import RentAddressForm from "./RentForms/AddressForms/RentAddressForm";
 
-export default function CarForm() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+export default function CarForm({ carName }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [telNumber, setTelNumber] = useState("");
+  const [startFormDate, setStartFormDate] = useState("");
+  const [endFormDate, setEndFormDate] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [nameValidate, setNameValidate] = useState(true);
+  const [emailValidate, setEmailValidate] = useState(true);
+  const [telValidate, setTelValidate] = useState(true);
   const [startValidate, setStartValidate] = useState("");
   const [endValidate, setEndValidate] = useState("");
+  const [postcodeValidate, setPostcodeValidate] = useState(true);
+  const [cityValidate, setCityValidate] = useState(true);
+  const [streetValidate, setStreetValidate] = useState(true);
+  const [addressValidate, setAddressValidate] = useState(true);
+
+  const words = street.split(" ");
+  const streetNumber = words.pop();
+  const streetName = words.join(" ");
+
+  function getCurrentDate() {
+    const currentDate = new Date();
+    return format(currentDate, "yyyy-MM-dd'T'HH:mm");
+  }
 
   function checkDateRange(date) {
     const activeDateHours = new Date(date).getHours();
@@ -21,151 +49,137 @@ export default function CarForm() {
     );
   }
 
-  function handleStart(event) {
-    const date = event.target.value;
-    const inputDate = new Date(date);
-    const currentDate = new Date();
-
-    if (inputDate < currentDate) {
-      setStartDate("");
-      setStartValidate(
-        <div
-          className="ms-2"
-          style={{
-            fontFamily: '"Black Ops One", system-ui',
-            color: "red",
-          }}
-        >
-          Nem érvényes dátum.
-        </div>
-      );
-      return;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      nameValidate &&
+      emailValidate &&
+      telValidate &&
+      postcodeValidate &&
+      cityValidate &&
+      streetValidate &&
+      validateTelNumber() &&
+      validateEmail() &&
+      validateArrdess()
+    ) {
+      try {
+        const formData = {
+          carName,
+          name,
+          email,
+          telNumber,
+          postcode,
+          city,
+          streetName,
+          streetNumber,
+          startDate: startFormDate,
+          endDate: endFormDate,
+        };
+        const response = await axios.post('/saveFormData', formData);
+        if(response.status === 200){
+          console.log('Az adatok sikeresen elmentve!');
+        }else{
+          console.error('Nem sikerült elmenteni az adatokat!', response.data);
+        }
+      } catch (error) {
+        console.error("A hiba: ", error);
+      }
     }
+  };
 
-    if (checkDateRange(date)) {
-      setStartDate(date);
-      setStartValidate("");
-    } else {
-      setStartDate("");
-      setStartValidate(
-        <div
-          className="ms-2"
-          style={{
-            fontFamily: '"Black Ops One", system-ui',
-            color: "red",
-          }}
-        >
-          A választott dátum nem 6 és 22 óra között van.
-        </div>
-      );
+  const validateTelNumber = async () => {
+    try {
+      const response = await axios.post("/validateTelNumber", {
+        telNumber,
+      });
+      setTelValidate(response.data.isValidTel);
+    } catch (error) {
+      console.error("Nem sikerült ellenőrizni a telefonszámot.", error);
     }
-  }
+  };
 
-  function handleEnd(event) {
-    const date = event.target.value;
-
-    if (date < startDate) {
-      setEndDate("");
-      setEndValidate(
-        <div
-          className="ms-2"
-          style={{
-            fontFamily: '"Black Ops One", system-ui',
-            color: "red",
-          }}
-        >
-          Nem érvényes dátum.
-        </div>
-      );
-      return;
+  const validateEmail = async () => {
+    try {
+      const response = await axios.post("/validateEmail", { email });
+      console.log(response.data.isValidEmail);
+      setEmailValidate(response.data.isValidEmail);
+    } catch (error) {
+      console.error("Nem sikerült ellenőrizni az email-t.", error);
     }
+  };
 
-    if (checkDateRange(date)) {
-      setEndDate(date);
-      setEndValidate("");
-    } else {
-      setEndDate("");
-      setEndValidate(
-        <div
-          className="ms-2"
-          style={{
-            fontFamily: '"Black Ops One", system-ui',
-            color: "red",
-          }}
-        >
-          A választott dátum nem 6 és 22 óra között van.
-        </div>
-      );
+  const validateArrdess = async () => {
+    const address = `${city} ${postcode} ${streetName.trim()} ${streetNumber}`;
+    try {
+      const response = await axios.post("/validateAddress", { address });
+      console.log(response.data.isValidAddress);
+      setAddressValidate(response.data.isValidAddress);
+    } catch (error) {
+      console.error("Nem sikerült ellenőrizni a címet.", error);
     }
-  }
-
-  function getCurrentDate() {
-    const currentDate = new Date();
-    console.log(format(currentDate, "yyyy-MM-dd'T'HH:mm"));
-    return format(currentDate, "yyyy-MM-dd'T'HH:mm");
-  }
+  };
 
   return (
     <>
-      <h5 className={`text-light ${style.h5}`}>
-        <IoIosContact className="me-2" />
-        Név
-      </h5>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Név"
-        className={`mb-3 ${style.label}`}
-      >
-        <Form.Control type="text" placeholder="Valaki Valaki" />
-      </FloatingLabel>
-      <Form.Label className={`h5 text-light ${style.h5}`}>
-        <MdEmail className="me-2" />
-        Email
-      </Form.Label>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Email cím"
-        className={`mb-3 ${style.label}`}
-      >
-        <Form.Control type="email" placeholder="name@example.com" />
-      </FloatingLabel>
-      <Form.Label className={`text-light ${style.h5}`}>
-        <MdEmail className="me-2" />
-        Kezdő dátum
-      </Form.Label>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Kezdő dátum"
-        className={`mb-3 ${style.label}`}
-      >
-        <Form.Control
-          type="datetime-local"
-          placeholder="Start date"
-          value={startDate}
-          onChange={handleStart}
-          min={getCurrentDate()}
+      <Form onSubmit={handleSubmit}>
+        <RentName
+          name={name}
+          setName={setName}
+          nameValidate={nameValidate}
+          setNameValidate={setNameValidate}
         />
-        {startValidate}
-      </FloatingLabel>
-      <Form.Label className={`text-light ${style.h5}`}>
-        <MdEmail className="me-2" />
-        Végző dátum
-      </Form.Label>
-      <FloatingLabel
-        controlId="floatingInput"
-        label="Végző dátum"
-        className={`mb-3 ${style.label}`}
-      >
-        <Form.Control
-          type="datetime-local"
-          placeholder="End date"
-          value={endDate}
-          onChange={handleEnd}
-          min={startDate}
-          disabled={!startDate}
+        <RentEmail
+          email={email}
+          setEmail={setEmail}
+          emailValidate={emailValidate}
+          setEmailValidate={setEmailValidate}
         />
-        {endValidate}
-      </FloatingLabel>
+        <RentTel
+          telNumber={telNumber}
+          setTelNumber={setTelNumber}
+          telValidate={telValidate}
+          setTelValidate={setTelValidate}
+        />
+        <RentStartDate
+          startFormDate={startFormDate}
+          setStartFormDate={setStartFormDate}
+          getCurrentDate={getCurrentDate}
+          checkDateRange={checkDateRange}
+          startValidate={startValidate}
+          setStartValidate={setStartValidate}
+        />
+        <RentEndDate
+          startFormDate={startFormDate}
+          checkDateRange={checkDateRange}
+          endFormDate={endFormDate}
+          setEndFormDate={setEndFormDate}
+          endValidate={endValidate}
+          setEndValidate={setEndValidate}
+        />
+        <RentAddressForm
+          postcodeValidate={postcodeValidate}
+          setPostcodeValidate={setPostcodeValidate}
+          cityValidate={cityValidate}
+          setCityValidate={setCityValidate}
+          streetValidate={streetValidate}
+          setStreetValidate={setStreetValidate}
+          postcode={postcode}
+          setPostcode={setPostcode}
+          city={city}
+          setCity={setCity}
+          street={street}
+          setStreet={setStreet}
+          addressValidate={addressValidate}
+          setAddressValidate={setAddressValidate}
+        />
+        <div className={style.container}>
+          <Button variant="light" type="submit">
+            Mehet
+          </Button>
+        </div>
+      </Form>
+      <h5 className={`text-light ${style.h5}`}>Mennyibe kerül?</h5>
+      <CalculateForm getCurrentDate={getCurrentDate} style={style} />
     </>
   );
 }

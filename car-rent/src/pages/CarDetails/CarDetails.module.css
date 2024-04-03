@@ -20,27 +20,11 @@
   padding-top: 1rem;
 }
 
-.inputContainer > .h5 {
-  display: flex;
-  align-items: start !important;
-  width: 29rem;
-  margin-bottom: 0.3rem;
-  font-family: "Black Ops One", system-ui;
-  font-weight: 400;
-  font-style: normal;
-}
-
 .flexBox {
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
   padding: 3rem;
-}
-
-.label {
-  margin-top: 0;
-  width: 30rem;
-  z-index: 1;
 }
 
 .description {
