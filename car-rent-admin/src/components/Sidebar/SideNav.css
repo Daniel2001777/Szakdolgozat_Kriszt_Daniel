@@ -1,0 +1,19 @@
+.nav-item .nav-link {
+    color: white;
+    font-family: "Black Ops One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    border-radius: 0 0 0 0 !important;
+  }
+  
+  .nav-item .active {
+    background-color: white !important;
+    color: black !important;
+    width: 100% !important;
+    border-radius: 0 0 0 0 !important;
+  }
+  
+  .nav-item{
+    width: 100%;
+    text-align: center;
+  }

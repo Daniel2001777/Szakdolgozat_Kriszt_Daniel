@@ -1,0 +1,8 @@
+.container{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    padding: 2rem;
+    overflow: scroll;
+    border-radius: 1rem;
+}

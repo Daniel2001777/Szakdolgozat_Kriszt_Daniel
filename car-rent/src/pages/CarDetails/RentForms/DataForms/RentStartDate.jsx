@@ -69,6 +69,7 @@ export default function RentStartDate({
           value={startFormDate}
           onChange={(event) => handleStart(event)}
           min={getCurrentDate()}
+          required
         />
         {startValidate}
       </FloatingLabel>

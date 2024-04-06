@@ -26,10 +26,15 @@ export default function StreetAddress({
         controlId="floatingInput"
         label="Utca, házszám"
         className={`mb-3 ${style.label}`}
-        onChange={(event) => setStreet(event.target.value.trim())}
-        onBlur={handleStreetValidation}
       >
-        <Form.Control type="text" placeholder="Írd be az utca nevét, és a házszámot!" required />
+        <Form.Control
+          type="text"
+          placeholder="Írd be az utca nevét, és a házszámot!"
+          value={street}
+          onChange={(event) => setStreet(event.target.value.trim())}
+          onBlur={handleStreetValidation}
+          required
+        />
         {streetValidate ? (
           ""
         ) : (

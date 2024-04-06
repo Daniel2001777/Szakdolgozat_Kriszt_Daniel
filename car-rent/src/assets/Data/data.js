@@ -20,7 +20,7 @@ const data = [
     slug: "ford-focus",
   },
   {
-    if:3,
+    id:3,
     img: corsa,
     title: "Opel Corsa",
     description: "Klímás. Elvihető mindennap 6.00-22.00 között.",

@@ -24,6 +24,7 @@ export default function CityAddress({ style, city, setCity, cityValidate, setCit
         <Form.Control
           type="text"
           placeholder="Írd be a város nevét!"
+          value={city}
           onChange={(event) => setCity(event.target.value.trim())}
           onBlur={handleCityValidation}
           required

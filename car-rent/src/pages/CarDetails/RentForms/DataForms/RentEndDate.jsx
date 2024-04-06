@@ -68,6 +68,7 @@ export default function RentEndDate({
           onChange={(event) => handleEnd(event)}
           min={startFormDate}
           disabled={!startFormDate}
+          required
         />
         {endValidate}
       </FloatingLabel>

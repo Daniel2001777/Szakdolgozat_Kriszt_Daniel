@@ -29,6 +29,7 @@ export default function PostcodeAddress({
         <Form.Control
           type="text"
           placeholder="Írd be az irányítószámot!"
+          value={postcode}
           onChange={(event) => setPostcode(event.target.value.trim())}
           onBlur={handlePostcodeValidation}
           required

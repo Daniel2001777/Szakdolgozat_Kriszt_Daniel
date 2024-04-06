@@ -1,9 +1,23 @@
 import React from "react";
 import CarCard from "./CarCard";
 import styles from "./Cars.module.css";
-import data from "../../assets/Data/data.js";
+import { useEffect } from "react";
+import axios from "../../axios/axiosInstance.js";
+import { useState } from "react";
+import { getCarData } from "../../assets/Data/data2.js";
 
 export default function Cars() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getCarData();
+      setData(data);
+    };
+    getData();
+  }, []);
+
+
   return (
     <>
       <div
@@ -24,9 +38,8 @@ export default function Cars() {
         {data.map((cars) => (
           <CarCard
             key={cars.title}
-            img={cars.img}
             title={cars.title}
-            description={cars.description}
+            description={cars.car_description}
             slug={cars.slug}
           />
         ))}

@@ -10,6 +10,7 @@ import RentName from "./RentForms/DataForms/RentName";
 import RentStartDate from "./RentForms/DataForms/RentStartDate";
 import RentTel from "./RentForms/DataForms/RentTel";
 import RentAddressForm from "./RentForms/AddressForms/RentAddressForm";
+import ValidateError from "./RentForms/ValidateError";
 
 export default function CarForm({ carName }) {
   const [name, setName] = useState("");
@@ -29,6 +30,7 @@ export default function CarForm({ carName }) {
   const [cityValidate, setCityValidate] = useState(true);
   const [streetValidate, setStreetValidate] = useState(true);
   const [addressValidate, setAddressValidate] = useState(true);
+  const [isFormSubmitted, setIsFormSubmitted] = useState("");
 
   const words = street.split(" ");
   const streetNumber = words.pop();
@@ -75,11 +77,32 @@ export default function CarForm({ carName }) {
           startDate: startFormDate,
           endDate: endFormDate,
         };
-        const response = await axios.post('/saveFormData', formData);
-        if(response.status === 200){
-          console.log('Az adatok sikeresen elmentve!');
-        }else{
-          console.error('Nem sikerült elmenteni az adatokat!', response.data);
+        const response = await axios.post("/saveFormData", formData);
+        if (response.status === 200) {
+          console.log("Az adatok sikeresen elmentve!");
+          setName("");
+          setEmail("");
+          setTelNumber("");
+          setPostcode("");
+          setCity("");
+          setStreet("");
+          setStartFormDate("");
+          setEndFormDate("");
+          setIsFormSubmitted(
+            <div
+              style={{
+                fontFamily: '"Black Ops One", system-ui',
+                color: "green",
+              }}
+            >
+              Az adatok elmentve!
+            </div>
+          );
+        } else {
+          console.error("Nem sikerült elmenteni az adatokat!", response.data);
+          setIsFormSubmitted(
+            <ValidateError>Az adatok nem lettek elmentve!</ValidateError>
+          );
         }
       } catch (error) {
         console.error("A hiba: ", error);
@@ -172,6 +195,15 @@ export default function CarForm({ carName }) {
           addressValidate={addressValidate}
           setAddressValidate={setAddressValidate}
         />
+        <div
+          className={style.container}
+          style={{
+            fontSize: "1.5rem",
+            marginTop: "0",
+          }}
+        >
+          {isFormSubmitted}
+        </div>
         <div className={style.container}>
           <Button variant="light" type="submit">
             Mehet

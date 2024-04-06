@@ -24,7 +24,7 @@
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
-  padding: 3rem;
+  padding: 1rem;
 }
 
 .description {

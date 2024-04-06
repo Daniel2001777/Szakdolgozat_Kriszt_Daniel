@@ -2,6 +2,7 @@
   "name": "car-rent-admin",
   "private": true,
   "version": "0.0.0",
+  "proxy": "https://localhost:8000",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,8 +11,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@ckeditor/ckeditor5-build-classic": "^41.2.1",
+    "@ckeditor/ckeditor5-react": "^6.2.0",
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "firebase": "^10.6.0",
+    "react-bootstrap": "^2.10.2",
+    "react-icons": "^5.0.1",
+    "react-slugify": "^3.0.3",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
@@ -21,6 +29,15 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "react-router-dom": "^6.22.3",
     "vite": "^5.2.0"
+  },
+  "axios": {
+    "proxy": {
+      "/api": {
+        "target": "http://localhost:8000",
+        "changeOrigin": true
+      }
+    }
   }
 }
