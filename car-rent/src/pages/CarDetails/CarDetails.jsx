@@ -3,7 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import CarCarousel from "./CarCarousel.jsx";
 import CarForm from "./CarForm.jsx";
 import style from "./CarDetails.module.css";
-import { getCarData } from "../../assets/Data/data2.js";
+import { getCarData } from "../../assets/Data/data.js";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -31,7 +31,7 @@ export default function CarDetails() {
     <>
       <div className={style.flexBox}>
         <div className={style.imageContainer}>
-          <CarCarousel slug={carData.slug} />
+          <CarCarousel slug={carData.slug} mainImage={carData.main_img}/>
           <div
             className={style.description}
             dangerouslySetInnerHTML={{ __html: carData.description }}

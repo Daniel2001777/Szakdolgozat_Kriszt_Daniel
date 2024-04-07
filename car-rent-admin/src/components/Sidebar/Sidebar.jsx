@@ -14,6 +14,7 @@ export default function Sidebar() {
       <ul className={`nav nav-pills justify-content-center ${style.navs}`}>
         <SideNav href="/data" title="Bérlések listála"/>
         <SideNav href="/addcar" title="Autó hozzáadása" />
+        <SideNav href="/modifycar" title="Autó módosítása" />
       </ul>
     </div>
   );

@@ -4,7 +4,7 @@ import styles from "./Cars.module.css";
 import { useEffect } from "react";
 import axios from "../../axios/axiosInstance.js";
 import { useState } from "react";
-import { getCarData } from "../../assets/Data/data2.js";
+import { getCarData } from "../../assets/Data/data.js";
 
 export default function Cars() {
   const [data, setData] = useState([]);
@@ -41,6 +41,7 @@ export default function Cars() {
             title={cars.title}
             description={cars.car_description}
             slug={cars.slug}
+            img={cars.main_img}
           />
         ))}
       </div>

@@ -16,9 +16,9 @@ router.post("/getCarData", (req, res) => {
 
 router.post("/saveCarData", (req, res) => {
   const carData = req.body;
-  console.log("Az adat: ", carData.title);
+  console.log("Az adat: ", carData.mainImage);
   const sql =
-    "INSERT INTO car_data (title, car_description, description, price, deposit, slug) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO car_data (title, car_description, description, price, deposit, slug, main_img) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [
     carData.title,
     carData.cardDescription,
@@ -26,6 +26,7 @@ router.post("/saveCarData", (req, res) => {
     carData.price,
     carData.deposit,
     carData.convertedTitle,
+    carData.mainImage
   ];
   db.query(sql, values, (err, data) => {
     if (err) {

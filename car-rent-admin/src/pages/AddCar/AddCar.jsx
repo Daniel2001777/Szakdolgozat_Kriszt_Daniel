@@ -14,7 +14,7 @@ import { v4 } from "uuid";
 import slugify from "react-slugify";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import "./ckEditor.css";
+import "../ckEditor.css";
 
 export default function AddCar() {
   const [title, setTitle] = useState(localStorage.getItem("title") || "");
@@ -27,10 +27,11 @@ export default function AddCar() {
   const [deposit, setDeposit] = useState(localStorage.getItem("deposit") || "");
   const [price, setPrice] = useState(localStorage.getItem("price") || "");
   const [images, setImages] = useState([]);
-  const [imageSelected, setImageSelected] = useState(false);
   const [uploadedImages, setUploadedImages] = useState({});
+  const [mainImage, setMainImage] = useState( localStorage.getItem("mainImage") || "");
 
   const convertedTitle = slugify(title);
+  console.log(mainImage);
 
   useEffect(() => {
     localStorage.setItem("title", title);
@@ -51,6 +52,10 @@ export default function AddCar() {
   useEffect(() => {
     localStorage.setItem("deposit", deposit);
   }, [deposit]);
+
+  useEffect(() => {
+    localStorage.setItem("mainImage", mainImage);
+  }, [mainImage]);
 
   const updatedListRef = ref(storage, `${convertedTitle}`);
 
@@ -96,8 +101,6 @@ export default function AddCar() {
       });
   };
 
-  console.log(description);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -108,11 +111,21 @@ export default function AddCar() {
         price,
         deposit,
         convertedTitle,
+        mainImage,
       };
-      console.log(carData);
       const response = await axios.post("/saveCarData", carData);
       if (response.status === 200) {
         console.log("Az adatok sikeresen elmentve!");
+        alert("Az adatok sikeresen elmentve!");
+        setTitle("");
+        setCardDescription("");
+        setDescription("");
+        setDeposit("");
+        setPrice("");
+        setImages([]);
+        setUploadedImages({});
+        setMainImage("");
+        localStorage.clear();
       } else {
         console.error("Nem sikerült elmenteni az adatokat!", response.data);
       }
@@ -121,27 +134,14 @@ export default function AddCar() {
     }
   };
 
-  /*console.log(images);
-
-  const config = { headers: { 'Content-Type': 'multipart/form-data'}};
-
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('title', title);
-    images.forEach(image => {
-      formData.append('images', image);
-    });
-    try{
-      await axios.post('/upload', formData, config);
-      await axios.post('/insert', {title, imageCount: images.length});
-
-      console.log("A képeket sikeresen feltöltöttük!");
+  const handleFirstImage = (url) => {
+    if (mainImage === "") {
+      setMainImage(url);
+      return true;
+    } else {
+      return url === mainImage;
     }
-    catch(err){
-      console.error("Hiba a feltöltés közben: ", err);
-    }
-
-  }*/
+  };
 
   return (
     <>
@@ -185,7 +185,6 @@ export default function AddCar() {
               type="file"
               multiple
               onChange={(event) => {
-                setImageSelected(event.target.files.length > 0);
                 setImages(Array.from(event.target.files));
                 alert("A képek töltődnek!");
               }}
@@ -219,9 +218,27 @@ export default function AddCar() {
           </Form.Group>
         </div>
         <div className={styles.imagesContainer}>
-          {Object.entries(uploadedImages).map(([name, url]) => {
+          {Object.entries(uploadedImages).map(([name, url], index) => {
             return (
               <div key={name} className={styles.imgContainer}>
+                <div className={styles.check}>
+                  Címlap:
+                  {index === 0 ? (
+                    <input
+                      type="checkbox"
+                      className="ms-2 mt-1"
+                      checked={handleFirstImage(url)}
+                      onChange={() => setMainImage(url)}
+                    ></input>
+                  ) : (
+                    <input
+                      type="checkbox"
+                      className="ms-2 mt-1"
+                      checked={url === mainImage}
+                      onChange={() => setMainImage(url)}
+                    ></input>
+                  )}
+                </div>
                 <img className={styles.img} src={url}></img>
                 <Button
                   variant="dark"
