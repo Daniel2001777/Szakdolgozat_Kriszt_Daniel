@@ -36,3 +36,75 @@
   font-weight: 400;
   font-style: normal;
 }
+
+@media only screen and (min-width: 860px) and (max-width: 950px) {
+  .label {
+    width: 25rem;
+  }
+  .h5{
+    width: 23rem;
+  }
+  .formLabel{
+    width: 24rem;
+  }
+}
+
+@media only screen and (min-width: 710px) and (max-width: 860px) {
+  .label {
+    width: 20rem;
+  }
+  .h5{
+    width: 18rem;
+  }
+  .formLabel{
+    width: 19rem;
+  }
+}
+
+@media only screen and (min-width: 583px) and (max-width: 710px) {
+  .label {
+    width: 15rem;
+  }
+  .h5{
+    width: 13rem;
+  }
+  .formLabel{
+    width: 14rem;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 540px){
+  .label {
+    width: 25rem;
+  }
+  .h5{
+    width: 23rem;
+  }
+  .formLabel{
+    width: 24rem;
+  }
+}
+
+@media only screen and (min-width: 370px) and (max-width: 450px){
+  .label {
+    width: 20rem;
+  }
+  .h5{
+    width: 18rem;
+  }
+  .formLabel{
+    width: 19rem;
+  }
+}
+
+@media only screen and (max-width: 370px){
+  .label {
+    width: 100%;
+  }
+  .h5{
+    width: 100%;
+  }
+  .formLabel{
+    width: 100%;
+  }
+}

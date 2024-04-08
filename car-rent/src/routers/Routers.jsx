@@ -4,7 +4,7 @@ import Home from "../pages/Home";
 import Cars from "../pages/Car/Cars";
 import CarDetails from "../pages/CarDetails/CarDetails";
 import NoPage from "../pages/NoPage";
-import Contact from "../pages/Contact";
+import Contact from "../pages/Contact/Contact";
 
 export default function Routers() {
   return (

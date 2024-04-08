@@ -2,7 +2,6 @@ import React from "react";
 import { IoIosContact } from "react-icons/io";
 import { FaFacebook } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
-import { RiInstagramFill } from "react-icons/ri";
 import { FaHouse } from "react-icons/fa6";
 import { FaCar } from "react-icons/fa";
 import { IoIosMail } from "react-icons/io";
@@ -24,11 +23,11 @@ export default function Footer() {
           <a
             href="https://www.facebook.com/profile.php?id=100094007367967"
             target="_blank"
-            className="me-4 text-reset"
+            className={`me-4 ${styles.link}`}
           >
             <FaFacebook />
           </a>
-          <a href="" className="me-4 text-reset">
+          <a href="" className={`me-4 ${styles.link}`}>
             <FaGoogle />
           </a>
         </div>
@@ -52,7 +51,7 @@ export default function Footer() {
               </h6>
               <p>
                 <a href="mailto:krisztd@gmail.com" className={styles.link}>
-                  <IoIosMail className="me-3" />
+                  <IoIosMail className="me-3 fs-5" />
                   krisztd@gmail.com
                 </a>
               </p>
@@ -100,9 +99,6 @@ export default function Footer() {
         </a>
         <a href="/contact" className={`${styles.link} p-2`}>
           Kapcsolat
-        </a>
-        <a href="#!" className={`${styles.link} p-2`}>
-          Laravel
         </a>
       </section>
     </footer>

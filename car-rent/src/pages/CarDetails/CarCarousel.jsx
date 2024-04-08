@@ -36,7 +36,9 @@ export default function CarCarousel({ slug, mainImage }) {
     return <div>Loading...</div>;
   } else {
     return (
-      <Carousel data-bs-theme="dark">
+      <Carousel data-bs-theme="dark" style={({
+        zIndex: "1",
+      })}>
         <Carousel.Item key={mainImage}>
           <img className={`d-block w-100`} src={mainImage} alt={mainImage} />
         </Carousel.Item>

@@ -26,7 +26,7 @@ router.post("/saveCarData", (req, res) => {
     carData.price,
     carData.deposit,
     carData.convertedTitle,
-    carData.mainImage
+    carData.mainImage,
   ];
   db.query(sql, values, (err, data) => {
     if (err) {
@@ -35,6 +35,19 @@ router.post("/saveCarData", (req, res) => {
     }
     console.log("A beillesztett rekord: ", data.affectedRows);
     return res.status(200).send("Az adatokat sikeresen elmentettük!");
+  });
+});
+
+router.delete("/deleteCarData/:id", (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE FROM car_data WHERE id = ?";
+  db.query(sql, [id], (err, data) => {
+    if (err) {
+      console.error("Hiba a törlés során:", err);
+      return res.status(500).json({ err: "Internal server error" });
+    }
+    console.log("Sikeres törlés.");
+    res.status(200).send("Sikeres törlés.");
   });
 });
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./modifyCar.module.css";
+import style from "./ModifyCar.module.css";
 import { Form, FormSelect, Button } from "react-bootstrap";
 import axios from "../../axios/axiosInstance.js";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -47,7 +47,7 @@ export default function ModifyCar() {
       setCarDescription(car.car_description);
       setDescription(car.description);
       setDeposit(car.deposit);
-      setPrice(car.deposit);
+      setPrice(car.price);
       setCarSlug(car.slug);
       setMainImage(car.main_img);
       setId(car.id);
@@ -66,7 +66,7 @@ export default function ModifyCar() {
         await uploadBytes(imageRef, images[i]);
       }
       const listCarRef = ref(storage, `${carSlug}`);
-      listPictures(listCarRef);
+      listPictures(listCarRef, mainImage);
     };
     uploadImages();
   }, [images]);
@@ -99,12 +99,12 @@ export default function ModifyCar() {
   };
 
   const listPictures = async (ref, mainImage) => {
-    await listAll(ref).then(async(response) => {
+    await listAll(ref).then(async (response) => {
       let isMainChecked = false;
       console.log(mainImage);
       const promises = [];
 
-      response.items.forEach( async (item) => {
+      response.items.forEach(async (item) => {
         const name = item.name;
         const promise = getDownloadURL(item).then((url) => {
           setCarImages((prev) => ({ ...prev, [name]: url }));
@@ -156,6 +156,48 @@ export default function ModifyCar() {
       }
     } catch (err) {
       console.error("A hiba: ", err);
+    }
+  };
+
+  const deleteAllImages = async () => {
+    const folderRef = ref(storage, `${carSlug}/`);
+    const allImages = await listAll(folderRef);
+    allImages.items.forEach(async (item) => {
+      await deleteObject(item);
+    });
+  };
+
+  const handleCarDelete = async () => {
+    const answer = window.confirm("Biztos, hogy törölni akarod?");
+    if (answer) {
+      try {
+        const response = await axios.delete(`/deleteCarData/${id}`);
+        if (response.status === 200) {
+          console.log("A törlés sikeres!");
+          await deleteAllImages();
+          setTitle("");
+          setCarDescription("");
+          setDescription("");
+          setPrice("");
+          setDeposit("");
+          setImages([]);
+          setCarImages({});
+          setCarSlug("");
+          setId("");
+          alert("Az adatbázis sikeresen frissítve!");
+          window.location.reload();
+        } else {
+          console.error(
+            "Nem sikerült frissíteni az adatbázist!",
+            response.data
+          );
+        }
+      } catch (err) {
+        console.error("A hiba: ", err);
+      }
+      console.log("Igen");
+    } else {
+      console.log("Művelet megszakítva!");
     }
   };
 
@@ -279,6 +321,9 @@ export default function ModifyCar() {
             <div className={style.buttonContainer}>
               <Button type="submit" variant="dark">
                 Mehet
+              </Button>
+              <Button variant="dark" onClick={handleCarDelete} className="ms-5">
+                Törlés
               </Button>
             </div>
           </Form>

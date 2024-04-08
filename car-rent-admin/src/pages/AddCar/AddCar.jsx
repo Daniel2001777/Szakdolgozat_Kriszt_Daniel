@@ -95,6 +95,7 @@ export default function AddCar() {
           Object.entries(uploadedImages).filter(([key]) => key !== name)
         );
         setUploadedImages(updatedImages);
+        setMainImage("");
       })
       .catch((err) => {
         alert("A képet nem siketült törölni!", err);
